@@ -1,0 +1,65 @@
+name: 'Codegen SDK Action'
+description: 'Execute Codegen SDK commands to manipulate and analyze codebases'
+author: 'SoftLari'
+
+inputs:
+  org_id:
+    description: 'Organization ID for Codegen service'
+    required: true
+  token:
+    description: 'API token for Codegen service'
+    required: true
+  prompt:
+    description: 'Prompt to send to Codegen agent'
+    required: true
+  base_url:
+    description: 'Base URL for Codegen API (optional)'
+    required: false
+    default: ''
+  wait_for_completion:
+    description: 'Whether to wait for the task to complete'
+    required: false
+    default: 'true'
+  timeout_seconds:
+    description: 'Maximum time to wait for completion in seconds'
+    required: false
+    default: '300'
+
+outputs:
+  task_id:
+    description: 'ID of the created task'
+    value: ${{ steps.run-agent.outputs.task_id }}
+  status:
+    description: 'Status of the task'
+    value: ${{ steps.run-agent.outputs.status }}
+  result:
+    description: 'Result of the task (if completed)'
+    value: ${{ steps.run-agent.outputs.result }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install Codegen SDK
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install codegen
+        
+    - name: Run Codegen Agent
+      id: run-agent
+      shell: bash
+      run: |
+        python ${{ github.action_path }}/run_agent.py
+      env:
+        INPUT_ORG_ID: ${{ inputs.org_id }}
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_PROMPT: ${{ inputs.prompt }}
+        INPUT_BASE_URL: ${{ inputs.base_url }}
+        INPUT_WAIT_FOR_COMPLETION: ${{ inputs.wait_for_completion }}
+        INPUT_TIMEOUT_SECONDS: ${{ inputs.timeout_seconds }}
+
