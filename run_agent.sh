@@ -41,12 +41,15 @@ API_URL="${BASE_URL}/v1/organizations/${ORG_ID}/agent/run"
 
 echo "Running Codegen agent with prompt: $PROMPT"
 
-# Make the API call using curl
+# Properly escape the prompt for JSON
+ESCAPED_PROMPT=$(echo "$PROMPT" | jq -Rsa .)
+
+# Make the API call using curl with properly escaped JSON
 RESPONSE=$(curl --silent --request POST \
   --url "$API_URL" \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/json" \
-  --data "{\"prompt\": \"$PROMPT\"}")
+  --data "{\"prompt\": $ESCAPED_PROMPT}")
 
 # Check if curl command was successful
 if [ $? -ne 0 ]; then
@@ -110,4 +113,3 @@ if [ "$WAIT_FOR_COMPLETION" = "true" ]; then
     exit 1
   fi
 fi
-
