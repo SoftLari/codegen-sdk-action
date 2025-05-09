@@ -6,7 +6,6 @@ This GitHub Action allows you to easily run the Codegen SDK agent in your workfl
 
 - Run Codegen agent with a custom prompt
 - Wait for task completion or run asynchronously
-- Control whether to wait for push operations or use "fire and forget"
 - Get task results directly in your workflow
 
 ## Usage
@@ -60,7 +59,6 @@ jobs:
           token: ${{ secrets.CODEGEN_API_TOKEN }}
           prompt: "Review the changes in this PR and suggest improvements"
           wait_for_completion: 'true'
-          wait_for_push: 'false'
           timeout_seconds: '600'
           
       - name: Use Codegen Results
@@ -78,7 +76,6 @@ jobs:
 | `prompt` | Prompt to send to Codegen agent | Yes | - |
 | `base_url` | Base URL for Codegen API (optional) | No | - |
 | `wait_for_completion` | Whether to wait for the task to complete | No | `true` |
-| `wait_for_push` | Whether to wait for push operations to complete or use "fire and forget" | No | `true` |
 | `timeout_seconds` | Maximum time to wait for completion in seconds | No | `300` |
 
 ## Outputs
@@ -99,3 +96,4 @@ jobs:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+

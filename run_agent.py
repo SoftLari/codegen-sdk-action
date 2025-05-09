@@ -19,7 +19,6 @@ def main():
     prompt = os.environ.get('INPUT_PROMPT')
     base_url = os.environ.get('INPUT_BASE_URL')
     wait_for_completion = os.environ.get('INPUT_WAIT_FOR_COMPLETION', 'true').lower() == 'true'
-    wait_for_push = os.environ.get('INPUT_WAIT_FOR_PUSH', 'true').lower() == 'true'
     timeout_seconds = int(os.environ.get('INPUT_TIMEOUT_SECONDS', '300'))
     
     # Validate required inputs
@@ -47,7 +46,7 @@ def main():
         
         # Run the agent with the provided prompt
         print(f"Running Codegen agent with prompt: {prompt}")
-        task = agent.run(prompt=prompt, wait_for_push=wait_for_push)
+        task = agent.run(prompt=prompt)
         
         # Set the task ID as output
         task_id = task.id if hasattr(task, 'id') else str(task)
@@ -87,3 +86,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

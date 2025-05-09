@@ -8,11 +8,6 @@ on:
         required: true
         type: string
         default: 'Implement a new feature to sort users by last login.'
-      wait_for_push:
-        description: 'Wait for push operations to complete'
-        required: false
-        type: boolean
-        default: true
 
 jobs:
   run-codegen:
@@ -25,7 +20,6 @@ jobs:
           org_id: ${{ secrets.CODEGEN_ORG_ID }}
           token: ${{ secrets.CODEGEN_API_TOKEN }}
           prompt: ${{ github.event.inputs.prompt }}
-          wait_for_push: ${{ github.event.inputs.wait_for_push }}
           
       - name: Display Results
         if: steps.codegen.outputs.status == 'completed'
@@ -34,3 +28,4 @@ jobs:
           echo "Task ID: ${{ steps.codegen.outputs.task_id }}"
           echo "Status: ${{ steps.codegen.outputs.status }}"
           echo "Result: ${{ steps.codegen.outputs.result }}"
+
