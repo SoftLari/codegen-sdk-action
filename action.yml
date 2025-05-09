@@ -15,7 +15,7 @@ inputs:
   base_url:
     description: 'Base URL for Codegen API (optional)'
     required: false
-    default: ''
+    default: 'https://api.codegen.com'
   wait_for_completion:
     description: 'Whether to wait for the task to complete'
     required: false
@@ -39,22 +39,12 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.12'
-        
-    - name: Install Codegen SDK
-      shell: bash
-      run: |
-        python -m pip install --upgrade pip
-        pip install codegen==0.55.4
-        
     - name: Run Codegen Agent
       id: run-agent
       shell: bash
       run: |
-        python ${{ github.action_path }}/run_agent.py
+        chmod +x ${{ github.action_path }}/run_agent.sh
+        ${{ github.action_path }}/run_agent.sh
       env:
         INPUT_ORG_ID: ${{ inputs.org_id }}
         INPUT_TOKEN: ${{ inputs.token }}
@@ -62,4 +52,3 @@ runs:
         INPUT_BASE_URL: ${{ inputs.base_url }}
         INPUT_WAIT_FOR_COMPLETION: ${{ inputs.wait_for_completion }}
         INPUT_TIMEOUT_SECONDS: ${{ inputs.timeout_seconds }}
-

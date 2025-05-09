@@ -1,12 +1,13 @@
 # Codegen SDK Action
 
-This GitHub Action allows you to easily run the Codegen SDK agent in your workflows, enabling AI-powered code generation and analysis directly in your CI/CD pipeline.
+This GitHub Action allows you to easily run the Codegen agent in your workflows, enabling AI-powered code generation and analysis directly in your CI/CD pipeline.
 
 ## Features
 
 - Run Codegen agent with a custom prompt
 - Wait for task completion or run asynchronously
 - Get task results directly in your workflow
+- Uses CURL for API calls (no Python SDK dependency)
 
 ## Usage
 
@@ -97,3 +98,10 @@ jobs:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Implementation Details
+
+This action uses CURL to make direct API calls to the Codegen API, eliminating the need for Python and the Codegen SDK. This results in:
+
+- Faster execution (no Python setup time)
+- Fewer dependencies
+- Simpler implementation
