@@ -20,6 +20,10 @@ inputs:
     description: 'Whether to wait for the task to complete'
     required: false
     default: 'true'
+  wait_for_push:
+    description: 'Whether to wait for push operations to complete or use "fire and forget"'
+    required: false
+    default: 'true'
   timeout_seconds:
     description: 'Maximum time to wait for completion in seconds'
     required: false
@@ -61,5 +65,5 @@ runs:
         INPUT_PROMPT: ${{ inputs.prompt }}
         INPUT_BASE_URL: ${{ inputs.base_url }}
         INPUT_WAIT_FOR_COMPLETION: ${{ inputs.wait_for_completion }}
+        INPUT_WAIT_FOR_PUSH: ${{ inputs.wait_for_push }}
         INPUT_TIMEOUT_SECONDS: ${{ inputs.timeout_seconds }}
-
