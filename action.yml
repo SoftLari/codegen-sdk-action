@@ -48,7 +48,7 @@ runs:
       shell: bash
       run: |
         python -m pip install --upgrade pip
-        pip install codegen
+        pip install codegen==0.55.4
         
     - name: Run Codegen Agent
       id: run-agent
