@@ -1,0 +1,31 @@
+name: Codegen SDK Example
+
+on:
+  workflow_dispatch:
+    inputs:
+      prompt:
+        description: 'Prompt for Codegen agent'
+        required: true
+        type: string
+        default: 'Implement a new feature to sort users by last login.'
+
+jobs:
+  run-codegen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Codegen Agent
+        id: codegen
+        uses: SoftLari/codegen-sdk-action@main
+        with:
+          org_id: ${{ secrets.CODEGEN_ORG_ID }}
+          token: ${{ secrets.CODEGEN_API_TOKEN }}
+          prompt: ${{ github.event.inputs.prompt }}
+          
+      - name: Display Results
+        if: steps.codegen.outputs.status == 'completed'
+        run: |
+          echo "Codegen task completed!"
+          echo "Task ID: ${{ steps.codegen.outputs.task_id }}"
+          echo "Status: ${{ steps.codegen.outputs.status }}"
+          echo "Result: ${{ steps.codegen.outputs.result }}"
+
